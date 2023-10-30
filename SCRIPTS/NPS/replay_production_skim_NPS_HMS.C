@@ -33,7 +33,8 @@ void replay_production_skim_NPS_HMS(int RunNumber=0, int MaxEvent=0, int FirstEv
     ROOTFileNamePattern = "ROOTfiles/COIN/50k/nps_hms_skim_%d_%d_%d.root"; // Current run_gen will have the first event = 0 so it doesnt interfere here.
   }
   else if (MaxEvent == -1 && (FirstSegment - MaxSegment) == 0) {
-    ROOTFileNamePattern = "ROOTfiles/COIN/SKIM/nps_hms_skim_%d_%d_%d_%d.root";
+    //ROOTFileNamePattern = "ROOTfiles/COIN/SKIM/nps_hms_skim_%d_%d_%d_%d.root";
+    ROOTFileNamePattern = "ROOTfiles/COIN/SKIM/nps_hms_skim_%d_%d_%d.root";
   }  else{
     ROOTFileNamePattern = "ROOTfiles/COIN/SKIM/nps_hms_skim_%d_%d_%d.root";
   }
@@ -235,7 +236,8 @@ void replay_production_skim_NPS_HMS(int RunNumber=0, int MaxEvent=0, int FirstEv
   // Define the analysis parameters
   TString ROOTFileName;
   if(MaxEvent == -1 && (FirstSegment - MaxSegment) == 0) {
-    ROOTFileName = Form(ROOTFileNamePattern, RunNumber, FirstSegment, FirstEvent, MaxEvent);
+    //ROOTFileName = Form(ROOTFileNamePattern, RunNumber, FirstSegment, FirstEvent, MaxEvent);
+     ROOTFileName = Form(ROOTFileNamePattern, RunNumber, FirstEvent, MaxEvent);
   } else {
      ROOTFileName = Form(ROOTFileNamePattern, RunNumber, FirstEvent, MaxEvent);
   }
@@ -274,9 +276,12 @@ void replay_production_skim_NPS_HMS(int RunNumber=0, int MaxEvent=0, int FirstEv
   analyzer->Process(run);     
   // Create report file from template.
   if(MaxEvent == -1 && (FirstSegment - MaxSegment) == 0) {
+    //analyzer->PrintReport("TEMPLATES/NPS/NPS_coin.template",
+    //			  Form("REPORT_OUTPUT/COIN/SKIM/skim_NPS_HMS_report_%d_%d_%d_%d.report",
+    //			  RunNumber, FirstSegment, FirstEvent, MaxEvent)); //FIXME:CHANGE
     analyzer->PrintReport("TEMPLATES/NPS/NPS_coin.template",
-			  Form("REPORT_OUTPUT/COIN/SKIM/skim_NPS_HMS_report_%d_%d_%d_%d.report",
-			  RunNumber, FirstSegment, FirstEvent, MaxEvent)); //FIXME:CHANGE
+			  Form("REPORT_OUTPUT/COIN/SKIM/skim_NPS_HMS_report_%d_%d.report",
+			  RunNumber, MaxEvent)); //FIXME:CHANGE
   } else {
     analyzer->PrintReport("TEMPLATES/NPS/NPS_coin.template",
 			  Form("REPORT_OUTPUT/COIN/SKIM/skim_NPS_HMS_report_%d_%d.report",
