@@ -1,7 +1,6 @@
 #include "MultiFileRun.h"
 
-void no_reference_times_nps_hms(int RunNumber=0, int MaxEvent=0, int FirstEvent = 1, int MaxSegment = 2, int FirstSegment = 0, const char* fname_prefix = "nps_coin")
-{
+void no_timing_windows_nps_hms(int RunNumber=0, int MaxEvent=0, int FirstEvent = 1, int MaxSegment = 2, int FirstSegment = 0, const char* fname_prefix = "nps_coin") {
 
   // Get RunNumber and MaxEvent if not provided.
   if(RunNumber == 0) {
@@ -16,7 +15,7 @@ void no_reference_times_nps_hms(int RunNumber=0, int MaxEvent=0, int FirstEvent 
       cerr << "...Invalid entry\n";
       return;
     }
-  }
+  }  
 
   // Create file name patterns.
   //  const char* RunFileNamePattern="NPS_3crate_%d.evio.0";
@@ -34,10 +33,10 @@ void no_reference_times_nps_hms(int RunNumber=0, int MaxEvent=0, int FirstEvent 
 
   const char* ROOTFileNamePattern;
   if (MaxEvent == 50000){
-    ROOTFileNamePattern = "ROOTfiles/NPS/50k/nps_hms_noReferenceTime_%d_%d.root";
+    ROOTFileNamePattern = "ROOTfiles/NPS/50k/nps_hms_noTimingWindows_%d_%d.root";
   }
   else{
-    ROOTFileNamePattern = "ROOTfiles/NPS/TIMING/nps_hms_noReferenceTime_%d_%d.root";
+    ROOTFileNamePattern = "ROOTfiles/NPS/TIMING/nps_hms_noTimingWindows_%d_%d.root";
   }
   
   
@@ -62,8 +61,8 @@ void no_reference_times_nps_hms(int RunNumber=0, int MaxEvent=0, int FirstEvent 
 
   //Overwrite the existing reference times with
   //the default values specified in hallc_replay.  
-  gHcParms->AddString("g_ctp_no_reference_times_filename", "PARAM/HMS/GEN/h_no_reference_times.param");
-  gHcParms->Load(gHcParms->GetString("g_ctp_no_reference_times_filename"));
+  //gHcParms->AddString("g_ctp_no_reference_times_filename", "PARAM/HMS/GEN/h_no_reference_times.param");
+  //gHcParms->Load(gHcParms->GetString("g_ctp_no_reference_times_filename"));
 
   //Now remove all Timing Windows and revert to 
   //the default values specifid in hallc_replay
@@ -74,7 +73,6 @@ void no_reference_times_nps_hms(int RunNumber=0, int MaxEvent=0, int FirstEvent 
 
   // Load params for COIN trigger configuration
   //gHcParms->Load("PARAM/TRIG/thms_fa22.param"); //FIXME: I modified here to see if we can get waveforms from HODO ADCs.
-  //gHcParms->Load("PARAM/TRIG/thms_nps23.param"); //FIXME: I modified here to see if we can get waveforms from HODO ADCs.
 
    
   // Load the Hall C style detector map 
@@ -267,7 +265,7 @@ void no_reference_times_nps_hms(int RunNumber=0, int MaxEvent=0, int FirstEvent 
   // Define crate map
   analyzer->SetCrateMapFileName("MAPS/NPS/CRATE/db_cratemap_coin.dat") ; //FIXME: CHANGE
   // Define DEF-file+
-  analyzer->SetOdefFile("DEF-files/HMS/TIMING/no_reference_times.def"); //FIXME: CHANGE
+  analyzer->SetOdefFile("DEF-files/HMS/TIMING/no_timing_windows.def"); //FIXME: CHANGE
   // Define cuts file
   analyzer->SetCutFile("DEF-files/NPS/NPS_cuts_coin.def"); //FIXME: CHANGE
   // File to record accounting information for cuts
@@ -275,7 +273,8 @@ void no_reference_times_nps_hms(int RunNumber=0, int MaxEvent=0, int FirstEvent 
   // start the actual analysis
   analyzer->Process(run);  
   // Create report file from template.
-  analyzer->PrintReport("TEMPLATES/NPS/NPS_coin.template",
-			Form("REPORT_OUTPUT/COIN/coin_NPS_HMS_report_%d_%d.report", RunNumber, MaxEvent)); //FIXME:CHANGE
-  
-}
+  //analyzer->PrintReport("TEMPLATES/NPS/NPS_coin.template",
+  //		Form("REPORT_OUTPUT/COIN/coin_NPS_HMS_report_%d_%d.report", RunNumber, MaxEvent)); //FIXME:CHANGE
+
+  return;
+  }
